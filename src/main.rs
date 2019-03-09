@@ -37,9 +37,8 @@ extern crate clap;
 use clap::{Arg, App};
 
 use std::env:: { current_dir, join_paths };
-use std::ffi::OsString;
 use std::fs::File;
-use std::io:: BufReader;
+use std::io:: { BufReader, BufRead };
 use std::path::Path;
 
 fn main() {
@@ -49,12 +48,18 @@ fn main() {
         .about("hangman cli game written in Rust")
         .get_matches();
 
-    let mut words: Vec<&str> = Vec::new();
+    let mut words: Vec<String> = Vec::new();
 
-    let paths = [Path::new(&current_dir().unwrap()), Path::new("/resources/words.txt")];
+    // FIXME: dont hard code the path
+    let words_list_path = Path::new("/Users/yj/Developer/hangman/resources/words.txt");
 
-    let words_list_path = join_paths(paths.iter());
+    // FIXME: dont panic
+    let reader = BufReader::new(File::open(words_list_path).unwrap());
 
-    let reader = BufReader::new(File::open(OsString::from(words_list_path)).unwrap());
+    for line in reader.lines() {
+        // FIXME: dont panic
+        words.push(line.unwrap_or("something went wrong getting this line".to_string()));
+    }
 
+    println!("{:?}", words);
 }
