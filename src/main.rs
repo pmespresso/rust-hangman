@@ -33,22 +33,28 @@
                 - Prompt user: Play Again?
 */
 
-// use std::env;
+extern crate clap;
+use clap::{Arg, App};
 
-use std::io;
+use std::env:: { current_dir, join_paths };
+use std::ffi::OsString;
+use std::fs::File;
+use std::io:: BufReader;
+use std::path::Path;
 
 fn main() {
-    println!("{}", "Welcome to Hangman!");
+    let matches = App::new("Hangman")
+        .version("0.1.0")
+        .author("YJ Kim <yjkimjunior@gmail.com>")
+        .about("hangman cli game written in Rust")
+        .get_matches();
 
-    println!("{}", "We will begin the game with a coin flip. Heads (H) or Tails (T)?");
+    let mut words: Vec<&str> = Vec::new();
 
-    let mut input: String = String::new();
+    let paths = [Path::new(&current_dir().unwrap()), Path::new("/resources/words.txt")];
 
-    io::stdin().read_line(&mut input);
+    let words_list_path = join_paths(paths.iter());
 
-    let choice = input.trim();
+    let reader = BufReader::new(File::open(OsString::from(words_list_path)).unwrap());
 
-    if choice.chars().nth(0) != Some('H') && choice.chars().nth(0) != Some('T') {
-        println!("{}", "invalid choice. Please choose H or T");
-    }
 }

@@ -1,0 +1,1 @@
+{"rustc":5105358705442676925,"features":"[]","target":2868082982595637998,"profile":11269552462031098067,"path":1036222786711178230,"deps":[["clap v2.32.0","clap",6104131851524890419]],"local":[{"MtimeBased":[[1552117721,113544194],".fingerprint/hangman-3a0d3d32999603c2/dep-bin-hangman-3a0d3d32999603c2"]}],"rustflags":[],"edition":"Edition2018"}
