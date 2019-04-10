@@ -1,0 +1,1 @@
+{"rustc":15213319881204273412,"features":"[]","target":777285186968482426,"profile":11870183705523825133,"path":4163829858421621167,"deps":[["console v0.7.5","console",10268961444924119539],["lazy_static v1.3.0","lazy_static",15829183850138302957],["tempfile v2.2.0","tempfile",16312634241882462156]],"local":[{"Precalculated":"0.3.0"}],"rustflags":[],"edition":"Edition2015"}

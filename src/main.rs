@@ -34,17 +34,16 @@
 */
 
 extern crate clap;
-use clap::{Arg, App};
+use clap::{App};
 use dialoguer::Input;
 use rand::prelude::*;
-use std::error::Error;
-use std::env:: { current_dir, join_paths };
+// use std::env:: { current_dir, join_paths };
 use std::fs::File;
 use std::io:: { BufReader, BufRead };
 use std::path::Path;
 
 fn main() {
-    let matches = App::new("Hangman")
+    App::new("Hangman")
         .version("0.1.0")
         .author("YJ Kim <yjkimjunior@gmail.com>")
         .about("hangman cli game written in Rust")
@@ -78,16 +77,31 @@ fn main() {
 
     if coin_flip_guess == coin_flip_result {
         // If Human choosing word - prompt and make sure it's in the word list
-        game_word = Input::new().with_prompt("Pick a Word For The Game").interact().unwrap();
+        game_word = Input::new().with_prompt("Congrats you get to start! Pick a Word For The Game").interact().unwrap();
     } else {
         // If Computer choosing word - select a word for the game using random number
         let random_num: usize = rand::thread_rng().gen_range(0, words.len());
         game_word = words[random_num].clone();
     }
 
+    let answer: Vec<char> = game_word.chars().collect();
+    let mut correctGuesses: Vec<char> = Vec::new();
+    let wrongGuesses: Vec<char> = Vec::new();
+
     // Loop time: Hangman State -> Guess -> Updated Hangman State -> Repeat
+    // 6 wrong guesses permitted: head, body, 2 arms, 2 legs
+    while correctGuesses != answer && wrongGuesses.len() < 6 {
+        let guess: char = Input::new().with_prompt("What's your guess?").interact().unwrap();
 
+        // assigns index of the guessed char to Some(number) or None
+        let index = answer.iter().position(|&letter| letter == guess);
 
-
-
+        match index {
+            Some(i) => {
+                &correctGuesses.insert(i, guess);
+                println!("{:?}", correctGuesses);
+            }
+            _ => println!("noooo")
+        }
+    }
 }
